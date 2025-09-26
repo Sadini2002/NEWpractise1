@@ -22,7 +22,9 @@ const lastOrder = await order.findOne().sort({ date : -1 }).limit(1)
 if (lastOrder.length>0 ){
     const lastOrderId = lastOrder[0].orderId; 
     // e.g., "CBC00001" replace "CBC" with ""
+
     const lastOrderNumberString= lastOrderId.replace("CBC","");
+
     lastOrderNumber = parseInt(lastOrderNumberString);
     const newOrderNumber = lastOrderNumber + 1;
     const newOrderNumberString = newOrderNumber.toString().padStart(5, '0');
@@ -40,6 +42,9 @@ const order = new order({
     products: [],
 })
 try{
+   const createOder= await order.save();
+    res.json({ message: "Order created successfully", orderId: orderId });
+    return createOder
 
 }catch (err) {
     res.status(500).json({ error: err.message });
