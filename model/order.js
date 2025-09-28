@@ -1,37 +1,40 @@
 import e from "express";
 import mongoose from "mongoose";
-import product from "./product";
 
 const orderSchema = new mongoose.Schema({
     orderId: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     }, 
     email: {
         type: String,
-        required: true, 
+        required: true 
     },
     name : {
         type: String,
-        required: true, 
+        required: true
     },
     address: {
         type: String,       
-        required: true,
+        required: true
     },
     phone: {
         type: String, 
-        required: true,  
+        required: true
     },
     status: {
         type: String,
         required: true,
-        default: "Pending",
+        default: "Pending"
+    },
+    labelledTotal: {
+        type: Number,
+        required: true
     },
     total:{
         type: Number,
-        required: true,
+        required: true
     } ,
     products: [
         {
@@ -42,7 +45,8 @@ const orderSchema = new mongoose.Schema({
                 altNames: [{ type: String  }],  
                 description: { 
                     type: String,
-                    required: ture  },
+                    required: true 
+                 }
 
                 
 
@@ -61,3 +65,6 @@ const orderSchema = new mongoose.Schema({
 });
 
 const order = mongoose.model('Order', orderSchema);
+
+
+export default order;
