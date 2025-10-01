@@ -5,8 +5,13 @@ import mongoose from 'mongoose';
 import productRouter from './router/productRoute.js';
 import userRouter from './router/userRoute.js';
 import jwt from 'jsonwebtoken';
-import orderRouter from './router/orderRoute.js'; 
+import orderRouter from './router/orderRoute.js';
+import dotenv from 'dotenv';
+dotenv.config();
+//import fetch from 'node-fetch'; 
+import cors from 'cors';
 
+app.use(cors());  
 
 
 //import { fetch } from 'undici-types';
@@ -54,7 +59,7 @@ app.use(bodyParser.json())
 
 
 
-mongoose.connect('mongodb+srv://jasingha2002sadininipunika_db_user:DLDtKDHxmExLK4X0@cluster0.rtl1zya.mongodb.net/')
+mongoose.connect(process.env.MONGODB_url)
 .then(() => 
     console.log('Connected to MongoDB'))
 .then(() => {
