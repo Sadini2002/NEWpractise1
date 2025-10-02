@@ -10,8 +10,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 //import fetch from 'node-fetch'; 
 import cors from 'cors';
-
-app.use(cors());  
+  
 
 
 //import { fetch } from 'undici-types';
@@ -24,25 +23,29 @@ app.use(cors());
 
 const app = express();
 
+app.use(cors());
+
 app.use(bodyParser.json())
 // i create middleware 
  app.use((req, res, next) => {
   const tokenString = req.headers['authorization'];
 
-  if (tokenString) {
+  if (tokenString!=null) {
     const token = tokenString.replace('Bearer ', '');
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-  if (err) {
-    if (err.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token expired, please log in again" });
-    }
-    return res.status(401).json({ message: "Invalid token" });
+    jwt.verify(token, process.env.JWT_KEY, (err, decoded) => {
+  if (decoded!=null) {
+    req.user = decoded;
+    next();
+  } else {
+    console.log(err,"Invalid Token");
+   res.status(403).json({ message: "Invalid Token" });
+   return;
   }
 
   const token = jwt.sign(
   payload,
-  process.env.JWT_SECRET || "cbc-batch-five#@2025",
+  process.env.JWT_KEY || "cbc-batch-five#@2025",
   { expiresIn: "1h" } // instead of "1h"
 );
 
