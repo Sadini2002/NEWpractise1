@@ -45,7 +45,7 @@ app.use(bodyParser.json())
 
   const token = jwt.sign(
   payload,
-  process.env.JWT_KEY || "cbc-batch-five#@2025",
+  process.env.JWT_KEY,
   { expiresIn: "1h" } // instead of "1h"
 );
 
